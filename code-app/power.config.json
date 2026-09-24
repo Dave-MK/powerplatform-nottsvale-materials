@@ -1,0 +1,36 @@
+{
+  "version": "1.0",
+  "appId": "REPLACE-WITH-YOUR-APP-ID",
+  "appDisplayName": "Nottsvale Floorplan",
+  "region": "prod",
+  "appType": "CodeApp",
+  "environmentId": "REPLACE-WITH-YOUR-ENVIRONMENT-ID",
+  "description": " ",
+  "buildPath": "./dist",
+  "buildEntryPoint": "index.html",
+  "localAppUrl": "http://localhost:3000",
+  "logoPath": "Default",
+  "connectionReferences": {},
+  "databaseReferences": {
+    "default.cds": {
+      "dataSources": {
+        "sites": {
+          "entitySetName": "nvm_sites",
+          "logicalName": "nvm_site",
+          "isHidden": false
+        },
+        "assets": {
+          "entitySetName": "nvm_assets",
+          "logicalName": "nvm_asset",
+          "isHidden": false
+        },
+        "maintenancerequests": {
+          "entitySetName": "nvm_maintenancerequests",
+          "logicalName": "nvm_maintenancerequest",
+          "isHidden": false
+        }
+      },
+      "environmentVariableName": ""
+    }
+  }
+}
