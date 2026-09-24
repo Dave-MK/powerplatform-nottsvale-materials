@@ -1,28 +1,56 @@
-# Nottsvale Materials: Power Platform maintenance system
+<p align="center">
+  <img src="docs/banner.svg" alt="Nottsvale Materials: Power Platform maintenance system" width="100%">
+</p>
 
-A portfolio build by David Kilgallon ([davidkilgallon.dev](https://davidkilgallon.dev)). Nottsvale Materials Ltd is a fictional UK manufacturer with three sites (Warrington Works, Wakefield Plant and Wigan Site). This repo holds what you need to rebuild its maintenance system in your own environment.
+<p align="center">
+  <b>A complete Microsoft Power Platform build, from an empty tenant to a working set of apps.</b><br>
+  A fictional UK manufacturer, three sites, three apps and one shared data model.
+</p>
 
-**Video series:** COMING SOON
+<p align="center">
+  <img alt="Power Platform" src="https://img.shields.io/badge/Power_Platform-742774?style=flat-square&logo=powerapps&logoColor=white">
+  <img alt="Dataverse" src="https://img.shields.io/badge/Dataverse-0078D4?style=flat-square">
+  <img alt="React" src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white">
+  <img alt="Power BI" src="https://img.shields.io/badge/Power_BI-F2C811?style=flat-square&logo=powerbi&logoColor=black">
+  <img alt="Licence: MIT" src="https://img.shields.io/badge/Licence-MIT-2ea44f?style=flat-square">
+</p>
+
+<p align="center">
+  <a href="#whats-in-the-build">What's in the build</a> ·
+  <a href="#repo-layout">Repo layout</a> ·
+  <a href="#import-order">Import guide</a> ·
+  <a href="#troubleshooting">Troubleshooting</a> ·
+  <a href="#known-limitations">Limitations</a>
+</p>
+
+---
+
+Built by David Kilgallon ([davidkilgallon.dev](https://davidkilgallon.dev)). Nottsvale Materials Ltd is a fictional manufacturer with three sites: Warrington Works, Wakefield Plant and Wigan Site. This repo holds what you need to rebuild its maintenance system in your own environment.
+
+**Video series:** [add links here]
 
 ## What's in the build
 
-- **Dataverse model:** Site, Asset and Maintenance Request tables with relationships, views and forms. A business rule makes Description required when a request's priority is Critical. A `Nottsvale Engineer` security role sits on top.
-- **Canvas app:** Nottsvale Request Logger, a phone app for logging faults on the shop floor.
-- **Model-driven app:** Nottsvale Maintenance Desk, for triaging and managing requests, with an embedded Power BI report.
-- **Code app:** Nottsvale Floorplan, built in React and TypeScript. It places assets on a floor plan for each site and shows their open requests.
-- **Power BI report:** connected to Dataverse, with Total Requests, Open Requests and Total Downtime Hours measures.
-- **SharePoint:** a contractor induction list and three sample documents for a maintenance records library.
+| | Component | What it does |
+|---|---|---|
+| **Data** | Dataverse model | Site, Asset and Maintenance Request tables with relationships, views and forms. A business rule makes Description required when a request's priority is Critical. A `Nottsvale Engineer` security role sits on top. |
+| **Shop floor** | Nottsvale Request Logger (canvas app) | A phone app for logging faults. |
+| **Back office** | Nottsvale Maintenance Desk (model-driven app) | For triaging and managing requests, with an embedded Power BI report. |
+| **Site plans** | Nottsvale Floorplan (code app) | Built in React and TypeScript. It places assets on a floor plan for each site and shows their open requests. |
+| **Reporting** | Power BI report | Connected to Dataverse, with Total Requests, Open Requests and Total Downtime Hours measures. |
+| **Contractors** | SharePoint | A contractor induction list and three sample documents for a maintenance records library. |
 
 ## Repo layout
 
 | Folder | Contents |
 |---|---|
-| `/solution` | The unmanaged solution zip is inside this folder. The zip is what you import. |
-| `/data` | Sample data exported with the Configuration Migration Tool. |
-| `/powerbi` | The `.pbix` report. The path will need repointing to your data to refresh the dash without issues |
-| `/sharepoint` | Contractor induction CSV and three sample maintenance documents. |
-| `/code-app` | Source for the Floorplan code app. |
-| `/docs` | The code app build guide and the floorplan bug log (PDF). |
+| [`/solution`](solution) | The unmanaged solution zip. This is what you import. |
+| [`/data`](data) | Sample data exported with the Configuration Migration Tool. |
+| [`/powerbi`](powerbi) | The `.pbix` report. |
+| [`/sharepoint`](sharepoint) | Contractor induction CSV and three sample maintenance documents. |
+| [`/code-app`](code-app) | Source for the Floorplan code app. |
+| [`/docs`](docs) | The code app build guide and the floorplan bug log (PDF). |
 
 ## What you need
 
@@ -42,7 +70,10 @@ Do these in order. Later steps depend on earlier ones. Steps 6 to 8 are optional
 1. Go to the Power Platform admin centre (admin.powerplatform.microsoft.com), then Environments, then New.
 2. Give it a name (for example `Nottsvale Dev`). Set the type to **Developer** and choose your region.
 3. Turn on **Add a Dataverse data store**. Set the language to English and the currency to your own. The currency can't be changed later, so choose carefully. Create it and wait until its state shows Ready.
-4. **Enable code apps now.** Select the new environment, then go to Settings, then expand Product and choose Features. Find **Power Apps code apps**, turn on **Enable code apps**, and select **Save**. Do this before you import anything. The setting can take a while to take effect, and doing it first means it has propagated by the time you open the code app.
+4. **Enable code apps now.** Select the new environment, then go to Settings, then expand Product and choose Features. Find **Power Apps code apps**, turn on **Enable code apps**, and select **Save**.
+
+> [!IMPORTANT]
+> Do step 4 before you import anything. The setting can take a while to take effect, and doing it first means it has propagated by the time you open the code app.
 
 ### 2. Import the solution
 
@@ -53,15 +84,17 @@ Do these in order. Later steps depend on earlier ones. Steps 6 to 8 are optional
 5. Select **Publish all customisations**.
 6. Check that **Enable code apps** is still on for this environment (step 1). The Floorplan won't run without it. People who run code apps need a Power Apps Premium licence.
 
-The import can take several minutes, and the solution may not appear in the list straight away.
-
-The import may warn about Microsoft's own platform solutions (names starting `msdyn_`). A normal Dataverse environment already has them, so this is expected. If the import fails and names a missing solution, update your environment or try again later.
+> [!NOTE]
+> The import can take several minutes, and the solution may not appear in the list straight away. It may also warn about Microsoft's own platform solutions (names starting `msdyn_`). A normal Dataverse environment already has them, so this is expected. If the import fails and names a missing solution, update your environment or try again later.
 
 ### 3. Import the sample data
 
 The data zip loads 3 sites, 23 assets and the maintenance requests, with their relationships intact. Import the solution first, because the tables must already exist.
 
-1. Get the Configuration Migration Tool. **Use version 9.1.0.185.** The latest version (9.1.0.365) crashes on startup on current Windows 11 builds, with no window and no error message. This is a known bug, and the older version works.
+> [!IMPORTANT]
+> Use Configuration Migration Tool **version 9.1.0.185**. The latest version (9.1.0.365) crashes on startup on current Windows 11 builds, with no window and no error message. This is a known bug, and the older version works.
+
+1. Get the Configuration Migration Tool.
    - Go to nuget.org and search for `Microsoft.CrmSdk.XrmTooling.ConfigurationMigration.Wpf`, open the **Versions** tab, choose **9.1.0.185**, then **Download package**.
    - Rename the `.nupkg` file to `.zip`, right-click it, choose Properties and tick **Unblock** if it's shown, then extract it to a short path such as `C:\CMT`.
    - Run `tools\DataMigrationUtility.exe`.
@@ -109,14 +142,33 @@ The **Maintenance Report** dashboard in the model-driven app points at my Power 
 
 ### 9. Changing the code app (optional)
 
-The code app already came in with the solution. Only do this if you want to change the code. See `code-app/README.md`.
+The code app already came in with the solution. Only do this if you want to change the code. See [`code-app/README.md`](code-app/README.md).
 
 ## Troubleshooting
 
-- **The solution doesn't appear after importing.** The import can take several minutes. Open **Solution history** in the Solutions list to see whether it's still running or has failed. If it failed, download the log from that entry.
-- **The Floorplan says the environment "does not allow this operation for this Code app".** Code apps aren't enabled on the environment yet, or the setting hasn't taken effect. Check that **Enable code apps** is on and saved for the environment you're using (Settings, Product, Features). If it is, turn it off, save, turn it on and save again, then allow time. In testing, it worked after a short wait. Also check the environment isn't in an environment group whose rules control this setting.
-- **The Configuration Migration Tool opens and closes straight away.** You have the latest version, which has a startup bug on current Windows 11. Use version 9.1.0.185 (see step 3).
-- **Sandbox environments aren't offered.** Sandbox and production environments need spare database capacity in the tenant, which trial tenants often lack. Choose the **Developer** type instead.
+<details>
+<summary><b>The solution doesn't appear after importing</b></summary>
+
+The import can take several minutes. Open **Solution history** in the Solutions list to see whether it's still running or has failed. If it failed, download the log from that entry.
+</details>
+
+<details>
+<summary><b>The Floorplan says the environment "does not allow this operation for this Code app"</b></summary>
+
+Code apps aren't enabled on the environment yet, or the setting hasn't taken effect. Check that **Enable code apps** is on and saved for the environment you're using (Settings, Product, Features). If it is, turn it off, save, turn it on and save again, then allow time. In testing, it worked after a short wait. Also check the environment isn't in an environment group whose rules control this setting.
+</details>
+
+<details>
+<summary><b>The Configuration Migration Tool opens and closes straight away</b></summary>
+
+You have the latest version, which has a startup bug on current Windows 11. Use version 9.1.0.185 (see step 3).
+</details>
+
+<details>
+<summary><b>Sandbox environments aren't offered</b></summary>
+
+Sandbox and production environments need spare database capacity in the tenant, which trial tenants often lack. Choose the **Developer** type instead.
+</details>
 
 ## Known limitations
 
@@ -125,12 +177,22 @@ The code app already came in with the solution. Only do this if you want to chan
 - **Tenant setup isn't in this repo.** Entra users and groups, Conditional Access, Purview retention and sensitivity labels, and the DLP policy can't be exported as a solution. The video series shows them. Your own tenant's DLP policies may also block connectors the apps use.
 - **No ALM pipeline.** A trial or developer environment has limited capacity, so I couldn't demonstrate a live deployment pipeline.
 
-## Updating this repo (maintainer notes)
+## Updating this repo
+
+<details>
+<summary><b>Maintainer notes</b></summary>
 
 - **Solution:** in Power Apps, open the solution, publish all customisations, then Export as **unmanaged**. Replace the zip in `/solution`.
 - **Data:** in the Configuration Migration Tool choose Create schema, sign in, and tick Site, Asset and Maintenance Request. On Maintenance Request untick Assigned Engineer. On Asset untick the currency field so the target environment's default applies. Then Save and Export, and save the data as `data/NottsvaleData.zip`.
 - **Before committing:** search the files for your environment URL, tenant domain, real email addresses and IDs in config files.
+</details>
 
 ## Licence
 
-MIT. See `LICENSE`.
+MIT. See [`LICENSE`](LICENSE).
+
+---
+
+<p align="center">
+  Built by <a href="https://davidkilgallon.dev">David Kilgallon</a>
+</p>
