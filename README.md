@@ -28,7 +28,7 @@
 
 Built by David Kilgallon ([davidkilgallon.dev](https://davidkilgallon.dev)). Nottsvale Materials Ltd is a fictional manufacturer with three sites: Warrington Works, Wakefield Plant and Wigan Site. This repo holds what you need to rebuild its maintenance system in your own environment.
 
-**Video series:** [add links here]
+**Video series:** COMING SOON
 
 ## What's in the build
 
