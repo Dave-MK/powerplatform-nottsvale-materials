@@ -17,9 +17,9 @@ A portfolio build by David Kilgallon ([davidkilgallon.dev](https://davidkilgallo
 
 | Folder | Contents |
 |---|---|
-| `/solution` | The unmanaged solution zip. This is what you import. |
+| `/solution` | The unmanaged solution zip is inside this folder. The zip is what you import. |
 | `/data` | Sample data exported with the Configuration Migration Tool. |
-| `/powerbi` | The `.pbix` report. |
+| `/powerbi` | The `.pbix` report. The path will need repointing to your data to refresh the dash without issues |
 | `/sharepoint` | Contractor induction CSV and three sample maintenance documents. |
 | `/code-app` | Source for the Floorplan code app. |
 | `/docs` | The code app build guide and the floorplan bug log (PDF). |
