@@ -42,6 +42,7 @@ Do these in order. Later steps depend on earlier ones. Steps 6 to 8 are optional
 1. Go to the Power Platform admin centre (admin.powerplatform.microsoft.com), then Environments, then New.
 2. Give it a name (for example `Nottsvale Dev`). Set the type to **Developer** and choose your region.
 3. Turn on **Add a Dataverse data store**. Set the language to English and the currency to your own. The currency can't be changed later, so choose carefully. Create it and wait until its state shows Ready.
+4. **Enable code apps now.** Select the new environment, then go to Settings, then expand Product and choose Features. Find **Power Apps code apps**, turn on **Enable code apps**, and select **Save**. Do this before you import anything. The setting can take a while to take effect, and doing it first means it has propagated by the time you open the code app.
 
 ### 2. Import the solution
 
@@ -50,6 +51,9 @@ Do these in order. Later steps depend on earlier ones. Steps 6 to 8 are optional
 3. Select Next. If it asks you to create or select a connection, sign in and continue. Then select Import and wait for the success message.
 4. Open the **Nottsvale Maintenance** solution. You should see the three tables, the `Nottsvale Engineer` role, the business rule, two dashboards, the model-driven app, the canvas app and the code app.
 5. Select **Publish all customisations**.
+6. Check that **Enable code apps** is still on for this environment (step 1). The Floorplan won't run without it. People who run code apps need a Power Apps Premium licence.
+
+The import can take several minutes, and the solution may not appear in the list straight away.
 
 The import may warn about Microsoft's own platform solutions (names starting `msdyn_`). A normal Dataverse environment already has them, so this is expected. If the import fails and names a missing solution, update your environment or try again later.
 
@@ -106,6 +110,13 @@ The **Maintenance Report** dashboard in the model-driven app points at my Power 
 ### 9. Changing the code app (optional)
 
 The code app already came in with the solution. Only do this if you want to change the code. See `code-app/README.md`.
+
+## Troubleshooting
+
+- **The solution doesn't appear after importing.** The import can take several minutes. Open **Solution history** in the Solutions list to see whether it's still running or has failed. If it failed, download the log from that entry.
+- **The Floorplan says the environment "does not allow this operation for this Code app".** Code apps aren't enabled on the environment yet, or the setting hasn't taken effect. Check that **Enable code apps** is on and saved for the environment you're using (Settings, Product, Features). If it is, turn it off, save, turn it on and save again, then allow time. In testing, it worked after a short wait. Also check the environment isn't in an environment group whose rules control this setting.
+- **The Configuration Migration Tool opens and closes straight away.** You have the latest version, which has a startup bug on current Windows 11. Use version 9.1.0.185 (see step 3).
+- **Sandbox environments aren't offered.** Sandbox and production environments need spare database capacity in the tenant, which trial tenants often lack. Choose the **Developer** type instead.
 
 ## Known limitations
 
